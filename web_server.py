@@ -16,14 +16,7 @@ import machine
 pins = [machine.Pin(i, machine.Pin.IN) for i in (0, 2, 4, 5, 12, 13, 14, 15)]
 
 
-html = """<!DOCTYPE html>
-<html>
- <head> <title>ESP8266 Pins</title> </head>
- <body> <h1>ESP8266 Pins</h1>
- <table border="1"> <tr><th>Pin</th><th>Value</th></tr> %s </table>
- </body>
-</html>
-"""
+
 
 import socket
 addr = socket.getaddrinfo('192.168.1.213', 80)[0][-1]
@@ -50,6 +43,31 @@ while True:
     request_state="NULL" 
 
 
+  html = """<html>
+    <head> 
+      <title>M5Stack Atom Matrix Web Server</title> 
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="icon" href="data:,"> 
+      <style>
+        html {font-family: Helvetica; display:inline-block; margin: 0px auto; text-align: center;}
+			  h1 {color: #0F3376; padding: 2vh;}
+			  p {font-size: 1.5rem;}
+			  .button{background-color: #00aa00; display: inline-block; border: none; 
+			   border-radius: 4px; color: white; padding: 16px 40px; text-decoration: none; 
+			   font-size: 30px; margin: 2px; cursor: pointer;} 
+        .red_button {background-color: #ff0000;}
+        .green_button {background-color: #ff00ff;}
+        .off_button {background-color: #000000;}
+      </style>
+    </head>
+    <body>
+      <h1>M5Stack Web Server</h1> 
+      <p>Response: <strong>""" + request_state + """</strong></p>	
+      <p><a href="/?led=on"><button class="button red_button">RED</button></a></p>
+      <p><a href="/?led=off"><button class="button off_button">OFF</button></a></p>
+    </body>
+    </html>
+  """
 
 
   cl.send('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
