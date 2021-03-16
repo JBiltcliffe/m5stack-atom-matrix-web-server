@@ -7,7 +7,7 @@ rgb.set_screen([0x0000ff,0,0,0,0x0000ff,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x0000ff,0
 
 sta_if = network.WLAN(network.STA_IF)
 sta_if.active(True)
-sta_if.connect('gloopy2', 'joannaisbeautiful')
+sta_if.connect('Wifi SSID', 'Password')
 
 rgb.set_screen([0x00ff00,0,0,0,0x00ff00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x00ff00,0,0,0,0x00ff00])
 
