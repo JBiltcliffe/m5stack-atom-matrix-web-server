@@ -9,6 +9,7 @@ rgb.set_screen([0x0000ff,0,0,0,0x0000ff,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x0000ff,0
 
 #set up and connect to wifi
 wlan = network.WLAN(network.STA_IF)
+wlan.ifconfig(('192.168.1.240', '255.255.255.0', '192.168.0.254', '8.8.8.8'))  #remove this line for DHCP 
 wlan.active(True)
 wlan.connect('Wifi SSID', 'Wifi Password')
 
@@ -20,7 +21,7 @@ while not wlan.isconnected():
 rgb.set_screen([0x00ff00,0,0,0,0x00ff00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x00ff00,0,0,0,0x00ff00])
 
 #set up web server socket
-addr = socket.getaddrinfo('192.168.1.213', 80)[0][-1]
+addr = socket.getaddrinfo('192.168.1.240', 80)[0][-1]  #IP address of the Matrix needs to be entered here
 s = socket.socket()
 s.bind(addr)
 s.listen(5)
