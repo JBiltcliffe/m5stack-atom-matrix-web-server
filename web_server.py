@@ -2,31 +2,32 @@ from m5stack import *
 from m5ui import *
 from uiflow import *
 import network
+import socket
 
+#set corners to blue to show code is active
 rgb.set_screen([0x0000ff,0,0,0,0x0000ff,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x0000ff,0,0,0,0x0000ff])
 
-sta_if = network.WLAN(network.STA_IF)
-sta_if.active(True)
-sta_if.connect('Wifi SSID', 'Password')
+#set up and connect to wifi
+wlan = network.WLAN(network.STA_IF)
+wlan.active(True)
+wlan.connect('Wifi SSID', 'Wifi Password')
 
+#set corners to orange while awaiting wifi connection
+while not wlan.isconnected():
+  rgb.set_screen([0xff8000,0,0,0,0xff8000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0xff8000,0,0,0,0xff8000])
+
+#when wifi connected make corners green
 rgb.set_screen([0x00ff00,0,0,0,0x00ff00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x00ff00,0,0,0,0x00ff00])
 
-
-import machine
-pins = [machine.Pin(i, machine.Pin.IN) for i in (0, 2, 4, 5, 12, 13, 14, 15)]
-
-
-
-
-import socket
+#set up web server socket
 addr = socket.getaddrinfo('192.168.1.213', 80)[0][-1]
-
 s = socket.socket()
 s.bind(addr)
 s.listen(5)
 
 request_state="NULL" 
 
+#main loop for responding to web page request
 while True:
   cl, addr = s.accept()
   request = cl.recv(1024)
