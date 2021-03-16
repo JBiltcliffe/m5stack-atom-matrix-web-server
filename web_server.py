@@ -31,16 +31,20 @@ while True:
   cl, addr = s.accept()
   request = cl.recv(1024)
   request = str(request)
-  led_on = request.find('/?led=on')
+  led_red = request.find('/?led=red')
+  led_green = request.find('/?led=green')
   led_off = request.find('/?led=off')
-  if led_on == 6 :
-    request_state="ON"
+  if led_red == 6 :
+    request_state="RED"
     rgb.setColorAll(0xff0000)
+  elif led_green == 6 :
+    request_state="GREEN" 
+    rgb.setColorAll(0x00ff00)
   elif led_off == 6 :
     request_state="OFF" 
     rgb.setColorAll(0x000000)
   else :
-    request_state="NULL" 
+    request_state="Unknown" 
 
 
   html = """<html>
@@ -56,14 +60,15 @@ while True:
 			   border-radius: 4px; color: white; padding: 16px 40px; text-decoration: none; 
 			   font-size: 30px; margin: 2px; cursor: pointer;} 
         .red_button {background-color: #ff0000;}
-        .green_button {background-color: #ff00ff;}
+        .green_button {background-color: #00ff00;}
         .off_button {background-color: #000000;}
       </style>
     </head>
     <body>
       <h1>M5Stack Web Server</h1> 
-      <p>Response: <strong>""" + request_state + """</strong></p>	
-      <p><a href="/?led=on"><button class="button red_button">RED</button></a></p>
+      <p>LED State: <strong>""" + request_state + """</strong></p>	
+      <p><a href="/?led=red"><button class="button red_button">RED</button></a>
+        <a href="/?led=green"><button class="button green_button">GREEN</button></a></p>
       <p><a href="/?led=off"><button class="button off_button">OFF</button></a></p>
     </body>
     </html>
